@@ -1,4 +1,4 @@
-# ai-signal
+# gleanings
 
 Research pipeline for identifying under-covered AI breakthroughs. Runs a team of parallel agents, synthesizes findings, and publishes to HTML.
 
@@ -14,7 +14,7 @@ Research pipeline for identifying under-covered AI breakthroughs. Runs a team of
 ```
 agents/           Agent prompt files (markdown). Each defines one research thread.
 lenses/           Local copy of the domain lens for reference.
-docs/             Generated HTML reports. Committed and served by GitHub Pages.
+output/           Generated HTML reports. Git-ignored.
 run.py            Orchestrator — runs agents in parallel, synthesizes, writes HTML.
 ```
 
