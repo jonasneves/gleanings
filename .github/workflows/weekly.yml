@@ -3,7 +3,7 @@ name: Weekly Gleanings
 on:
   schedule:
     - cron: '0 9 * * 1'  # Every Monday at 9am UTC
-  workflow_dispatch:      # Manual trigger from GitHub UI
+  workflow_dispatch:      # Manual trigger from Actions tab
 
 permissions:
   contents: read
@@ -23,7 +23,7 @@ jobs:
 
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: '3.12'
 
       - name: Install dependencies
         run: pip install -r requirements.txt
@@ -31,6 +31,9 @@ jobs:
       - name: Run pipeline
         run: python run.py --no-open
         env:
+          # Prefer GitHub Models (zero-config with Copilot).
+          # Falls back to ANTHROPIC_API_KEY if GITHUB_TOKEN lacks model access.
+          GITHUB_TOKEN: ${{ secrets.MODELS_TOKEN }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
 
       - name: Upload Pages artifact
@@ -46,6 +49,6 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - name: Deploy to GitHub Pages
+      - name: Deploy
         id: deployment
         uses: actions/deploy-pages@v4
